@@ -1,0 +1,41 @@
+$mdc-theme-primary: #2774AE;
+$mdc-theme-secondary: #FFD100;
+$mdc-theme-error: #990000;
+$mdc-theme-surface: white;
+$mdc-theme-background: #C3D7EE;
+
+$font-weights: (
+    light: 300,
+    regular: 400,
+    bold: 700
+);
+
+$mdc-typography-font-family: unquote("Helvetica, Arial, sans-serif");
+
+@function mdc-font(
+    $size,
+    $weight,
+    $letter-spacing,
+    $text-transform: none
+) {
+    @return (
+        font-size: $size,
+        font-weight: map-get($font-weights, $weight),
+        letter-spacing: $letter-spacing,
+        text-transform: $text-transform
+    );
+}
+
+$mdc-typography-styles-headline1: mdc-font(96px, bold, -1.5px);
+$mdc-typography-styles-headline2: mdc-font(60px, bold, -0.5px);
+$mdc-typography-styles-headline3: mdc-font(48px, bold, 0);
+$mdc-typography-styles-headline4: mdc-font(36px, bold, 0.25px);
+$mdc-typography-styles-headline5: mdc-font(24px, bold, 0);
+$mdc-typography-styles-headline6: mdc-font(20px, bold, 0.15px);
+$mdc-typography-styles-subtitle1: mdc-font(16px, bold, 0.15px);
+$mdc-typography-styles-subtitle2: mdc-font(14px, bold, 0.1px);
+$mdc-typography-styles-body1: mdc-font(16px, regular, 0.5px);
+$mdc-typography-styles-body2: mdc-font(14px, regular, 0.25px);
+$mdc-typography-styles-button: mdc-font(14px, bold, 1.25px, uppercase);
+$mdc-typography-styles-caption: mdc-font(12px, light, 0.4px);
+$mdc-typography-styles-overline: mdc-font(10px, light, 1.5px, uppercase);
