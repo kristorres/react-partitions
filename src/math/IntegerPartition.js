@@ -3,15 +3,18 @@ const {PI: π, floor, log, random, sqrt} = Math;
 const partitionRestrictions = {
     none: {
         allowPart: (part) => true,
-        validateWeight: (weight) => true
+        validateWeight: (weight) => true,
+        validateWeightForDistinctParts: (weight) => true
     },
     even: {
         allowPart: (part) => part % 2 === 0,
-        validateWeight: (weight) => weight % 2 === 0
+        validateWeight: (weight) => weight % 2 === 0,
+        validateWeightForDistinctParts: (weight) => weight % 2 === 0
     },
     odd: {
         allowPart: (part) => part % 2 === 1,
-        validateWeight: (weight) => true
+        validateWeight: (weight) => true,
+        validateWeightForDistinctParts: (weight) => weight !== 2
     }
 };
 
@@ -23,6 +26,10 @@ const getPartitionRestriction = (partRestriction) => {
     return partitionRestriction;
 };
 
+const partsAreDistinct = (λ) => {
+    return λ.length === (new Set(λ)).size;
+};
+
 const validatePositiveInteger = (n) => {
     if (
         typeof n !== "number"
@@ -32,6 +39,33 @@ const validatePositiveInteger = (n) => {
     ) {
         throw new Error("n is not a positive integer.");
     }
+};
+
+const generateRandomWithDistinctParts = (n, partRestriction = "none") => {
+    validatePositiveInteger(n);
+    const restriction = getPartitionRestriction(partRestriction);
+    if (restriction.validateWeightForDistinctParts(n) === false) {
+        throw new Error(`Invalid value for n due to restriction: ${n}.`);
+    }
+    let λ = [];
+    while (true) {
+        let largestPartAllowed = n;
+        while (largestPartAllowed > 0) {
+            const part = floor(random() * largestPartAllowed) + 1;
+            if (restriction.allowPart(part)) {
+                λ.push(part);
+                largestPartAllowed -= part;
+            }
+        }
+        if (partsAreDistinct(λ)) {
+            break;
+        }
+        λ = [];
+    }
+    λ.sort(
+        (a, b) => b - a
+    );
+    return λ;
 };
 
 const IntegerPartition = {
@@ -63,7 +97,8 @@ const IntegerPartition = {
         }
         λ.reverse();
         return λ;
-    }
+    },
+    generateRandomWithDistinctParts
 };
 
 export default IntegerPartition;
