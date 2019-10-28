@@ -98,7 +98,6 @@ const IntegerPartition = {
         λ.reverse();
         return λ;
     },
-    generateRandomWithDistinctParts,
     generateRandomSelfConjugate: (n) => {
         const λ = generateRandomWithDistinctParts(n, "odd");
         const μ = [];
@@ -116,7 +115,8 @@ const IntegerPartition = {
             μ[i] += minor;
         }
         return μ;
-    }
+    },
+    generateRandomWithDistinctParts
 };
 
 export default IntegerPartition;
