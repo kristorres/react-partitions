@@ -1,5 +1,14 @@
 import {useEffect, useState} from "react";
 
+const useComponentDidMount = (handler) => {
+    useEffect(
+        () => {
+            handler();
+        },
+        []
+    );
+};
+
 const useMedia = (query) => {
     const [matches, setMatches] = useState(window.matchMedia(query).matches);
     useEffect(
@@ -22,5 +31,6 @@ const useMedia = (query) => {
 };
 
 export {
+    useComponentDidMount,
     useMedia
 };
