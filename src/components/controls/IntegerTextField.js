@@ -4,18 +4,15 @@ import React from "react";
 
 import {useComponentDidMount} from "../../hooks.js";
 
-function IntegerTextField({label, value, setValue, min, max, width}) {
+const styles = {
+    input: {
+        textAlign: "right"
+    }
+};
+
+function IntegerTextField({label, value, setValue, min, max, style}) {
 
     const id = label.replace(/ /g, "-").toLowerCase();
-
-    const styles = {
-        root: {
-            width
-        },
-        input: {
-            textAlign: "right"
-        }
-    };
 
     const integerValueCanBeNegative = (
         (min !== undefined && min < 0) || (max !== undefined && max < 0)
@@ -75,7 +72,7 @@ function IntegerTextField({label, value, setValue, min, max, width}) {
     return (
         <div
             className={`mdc-text-field mdc-text-field--outlined ${id}`}
-            style={styles.root}
+            style={style}
         >
             <input
                 type="text"
@@ -105,7 +102,11 @@ IntegerTextField.propTypes = {
     setValue: PropTypes.func.isRequired,
     min: PropTypes.number,
     max: PropTypes.number,
-    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    style: PropTypes.object.isRequired
+};
+
+IntegerTextField.defaultProps = {
+    style: {}
 };
 
 export default IntegerTextField;
