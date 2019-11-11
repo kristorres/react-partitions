@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 
 import FlexBox from "../../FlexBox.js";
+import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
 import {useMedia} from "../../../hooks.js";
@@ -12,7 +13,7 @@ const styles = {
         minHeight: 1000
     },
     controlPanel: {
-        padding: "24px 0"
+        padding: "12px 0"
     },
     control: {
         width: 240,
@@ -20,32 +21,80 @@ const styles = {
     },
     bijectionDescription: {
         margin: 0
+    },
+    button: {
+        margin: 12
     }
 };
 
-const bijectionDescriptions = {
-    "Strike-slip": (
-        "Works on most partitions."
-    ),
-    "Shred-and-stretch": (
-        "Even partition ↦ Even partition"
-    ),
-    "Cut-and-stretch": (
-        "Self-conjugate partition ↦ Partition with distinct odd parts"
-    ),
-    "Sylvester/Glaisher": (
-        "Odd partition ↦ Partition with distinct parts"
-    )
+const bijections = {
+    "Strike-slip": {
+        description: (
+            "Works on most partitions."
+        ),
+        validatePartitionSize: (n) => true
+    },
+    "Shred-and-stretch": {
+        description: (
+            "Even partition ↦ Even partition"
+        ),
+        validatePartitionSize: (n) => n % 2 === 0
+    },
+    "Cut-and-stretch": {
+        description: (
+            "Self-conjugate partition ↦ Partition with distinct odd parts"
+        ),
+        validatePartitionSize: (n) => n !== 2
+    },
+    "Sylvester/Glaisher": {
+        description: (
+            "Odd partition ↦ Partition with distinct parts"
+        ),
+        validatePartitionSize: (n) => true
+    }
 };
 
 function GUI() {
+
     const [partitionSizeString, setPartitionSizeString] = useState("");
-    const [bijection, setBijection] = useState(null);
-    const windowWidthIsAtLeastSmall = useMedia("(min-width: 600px)");
+    const [bijectionName, setBijectionName] = useState(null);
+
+    const windowWidthIsExtraSmall = useMedia("(min-width: 600px)") === false;
+    const windowWidthIsAtLeastMedium = useMedia("(min-width: 960px)");
+    const bijectionDescriptionIsInControlPanel = (
+        windowWidthIsExtraSmall
+        || windowWidthIsAtLeastMedium
+    );
+
+    const partitionSize = parseInt(partitionSizeString, 10);
+    const bijection = bijections[bijectionName];
+    const buttonIsDisabled = (
+        isNaN(partitionSize)
+        || bijectionName === null
+        || bijection.validatePartitionSize(partitionSize) === false
+    );
+
+    function BijectionDescriptionView() {
+        const style = {
+            width: (windowWidthIsAtLeastMedium) ? 240 : undefined,
+            margin: 12
+        };
+        return (
+            <div style={style}>
+                <p
+                    className="mdc-typography--body1"
+                    style={styles.bijectionDescription}
+                >
+                    {bijection?.description ?? ""}
+                </p>
+            </div>
+        );
+    }
+
     return (
         <div style={styles.root}>
             <FlexBox
-                direction={windowWidthIsAtLeastSmall ? "row" : "column"}
+                direction={windowWidthIsExtraSmall ? "column" : "row"}
                 justifyContent="center"
                 alignItems="center"
                 style={styles.controlPanel}
@@ -60,20 +109,25 @@ function GUI() {
                 <SelectMenu
                     style={styles.control}
                     label="Bijection"
-                    value={bijection}
-                    options={Object.keys(bijectionDescriptions)}
-                    setValue={setBijection}
+                    value={bijectionName}
+                    options={Object.keys(bijections)}
+                    setValue={setBijectionName}
                     width={240}
                 />
-                <div style={styles.control}>
-                    <p
-                        className="mdc-typography--body1"
-                        style={styles.bijectionDescription}
-                    >
-                        {bijectionDescriptions[bijection] || ""}
-                    </p>
-                </div>
+                {(bijectionDescriptionIsInControlPanel) && (
+                    <BijectionDescriptionView/>
+                )}
+                <Button
+                    style={styles.button}
+                    label="Animate"
+                    disabled={buttonIsDisabled}
+                />
             </FlexBox>
+            {(bijectionDescriptionIsInControlPanel === false) && (
+                <FlexBox justifyContent="center" alignItems="center">
+                    <BijectionDescriptionView/>
+                </FlexBox>
+            )}
         </div>
     );
 }
