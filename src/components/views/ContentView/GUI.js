@@ -4,13 +4,12 @@ import FlexBox from "../../FlexBox.js";
 import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
-import {useMedia} from "../../../hooks.js";
+import {useComponentDidMount, useMedia} from "../../../hooks.js";
 
 const styles = {
     root: {
         backgroundColor: "#F5F5F5",
-        width: "100%",
-        minHeight: 1000
+        width: "100%"
     },
     controlPanel: {
         padding: "12px 0"
@@ -23,6 +22,10 @@ const styles = {
         margin: 0
     },
     button: {
+        margin: 12
+    },
+    canvas: {
+        border: "2px solid black",
         margin: 12
     }
 };
@@ -74,6 +77,11 @@ function GUI() {
         || bijection.validatePartitionSize(partitionSize) === false
     );
 
+    const setCanvasWidth = () => {
+        const context = document.querySelector("canvas").getContext("2d");
+        context.canvas.width = document.querySelector(".gui").clientWidth - 28;
+    };
+
     function BijectionDescriptionView() {
         const style = {
             width: (windowWidthIsAtLeastMedium) ? 240 : undefined,
@@ -91,8 +99,18 @@ function GUI() {
         );
     }
 
+    useComponentDidMount(
+        () => {
+            setCanvasWidth();
+            window.addEventListener("resize", setCanvasWidth);
+            return () => {
+                window.removeEventListener("resize", setCanvasWidth);
+            };
+        }
+    );
+
     return (
-        <div style={styles.root}>
+        <div className="gui" style={styles.root}>
             <FlexBox
                 direction={windowWidthIsExtraSmall ? "column" : "row"}
                 justifyContent="center"
@@ -128,6 +146,7 @@ function GUI() {
                     <BijectionDescriptionView/>
                 </FlexBox>
             )}
+            <canvas height="1000" style={styles.canvas}></canvas>
         </div>
     );
 }
