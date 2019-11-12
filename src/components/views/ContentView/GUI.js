@@ -65,8 +65,7 @@ function GUI() {
     const windowWidthIsExtraSmall = useMedia("(min-width: 600px)") === false;
     const windowWidthIsAtLeastMedium = useMedia("(min-width: 960px)");
     const bijectionDescriptionIsInControlPanel = (
-        windowWidthIsExtraSmall
-        || windowWidthIsAtLeastMedium
+        windowWidthIsExtraSmall || windowWidthIsAtLeastMedium
     );
 
     const partitionSize = parseInt(partitionSizeString, 10);
