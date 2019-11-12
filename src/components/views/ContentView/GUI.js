@@ -111,7 +111,7 @@ function GUI() {
     return (
         <div className="gui" style={styles.root}>
             <FlexBox
-                direction={windowWidthIsExtraSmall ? "column" : "row"}
+                direction={(windowWidthIsExtraSmall) ? "column" : "row"}
                 justifyContent="center"
                 alignItems="center"
                 style={styles.controlPanel}
