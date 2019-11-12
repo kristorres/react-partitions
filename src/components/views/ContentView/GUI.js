@@ -8,7 +8,6 @@ import {useComponentDidMount, useMedia} from "../../../hooks.js";
 
 const styles = {
     root: {
-        backgroundColor: "#F5F5F5",
         width: "100%"
     },
     controlPanel: {
@@ -25,8 +24,9 @@ const styles = {
         margin: 12
     },
     canvas: {
+        backgroundColor: "white",
         border: "2px solid black",
-        margin: 12
+        marginTop: 12
     }
 };
 
@@ -79,7 +79,7 @@ function GUI() {
 
     const setCanvasWidth = () => {
         const context = document.querySelector("canvas").getContext("2d");
-        context.canvas.width = document.querySelector(".gui").clientWidth - 28;
+        context.canvas.width = document.querySelector(".gui").clientWidth - 4;
     };
 
     function BijectionDescriptionView() {
