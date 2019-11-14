@@ -60,7 +60,7 @@
         "no-nested-ternary": "error",
         "no-new-object": "error",
         "no-new-wrappers": "error",
-        "no-param-reassign": ["error", { "props": true }],
+        "no-param-reassign": ["error", { "props": false }],
         "no-plusplus": "error",
         "no-trailing-spaces": "error",
         "no-underscore-dangle": "error",

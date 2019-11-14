@@ -5,6 +5,9 @@ import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
 import {useComponentDidMount, useMedia} from "../../../hooks.js";
+import IntegerPartition from "../../../math/IntegerPartition.js";
+
+const {PI: π} = Math;
 
 const styles = {
     root: {
@@ -35,25 +38,37 @@ const bijections = {
         description: (
             "Works on most partitions."
         ),
-        validatePartitionSize: (n) => true
+        validatePartitionSize: (n) => true,
+        generateRandomPartition: (n) => {
+            return IntegerPartition.generateRandom(n);
+        }
     },
     "Shred-and-stretch": {
         description: (
             "Even partition ↦ Even partition"
         ),
-        validatePartitionSize: (n) => n % 2 === 0
+        validatePartitionSize: (n) => n % 2 === 0,
+        generateRandomPartition: (n) => {
+            return IntegerPartition.generateRandom(n, "even");
+        }
     },
     "Cut-and-stretch": {
         description: (
             "Self-conjugate partition ↦ Partition with distinct odd parts"
         ),
-        validatePartitionSize: (n) => n !== 2
+        validatePartitionSize: (n) => n !== 2,
+        generateRandomPartition: (n) => {
+            return IntegerPartition.generateRandomSelfConjugate(n);
+        }
     },
     "Sylvester/Glaisher": {
         description: (
             "Odd partition ↦ Partition with distinct parts"
         ),
-        validatePartitionSize: (n) => true
+        validatePartitionSize: (n) => true,
+        generateRandomPartition: (n) => {
+            return IntegerPartition.generateRandom(n, "odd");
+        }
     }
 };
 
@@ -75,6 +90,44 @@ function GUI() {
         || bijectionName === null
         || bijection.validatePartitionSize(partitionSize) === false
     );
+
+    const createFerrersDiagram = () => {
+        const partition = bijection.generateRandomPartition(partitionSize);
+        const dots = [];
+        const dotRadius = 5;
+        const latticeUnit = dotRadius * 3;
+        const offset = dotRadius * 2;
+        for (let i = 0; i < partition.length; i += 1) {
+            for (let j = 0; j < partition[i]; j += 1) {
+                dots.push({
+                    x: j * latticeUnit + offset,
+                    y: i * latticeUnit + offset,
+                    radius: dotRadius,
+                    color: "blue"
+                });
+            }
+        }
+        return dots;
+    };
+
+    const drawDot = (dot, context) => {
+        context.beginPath();
+        context.arc(dot.x, dot.y, dot.radius, 0, 2 * π, true);
+        context.fillStyle = dot.color;
+        context.fill();
+        context.lineWidth = 2;
+        context.strokeStyle = "black";
+        context.stroke();
+    };
+
+    const drawFerrersDiagram = () => {
+        const ferrersDiagram = createFerrersDiagram();
+        const context = document.querySelector("canvas").getContext("2d");
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        for (const dot of ferrersDiagram) {
+            drawDot(dot, context);
+        }
+    };
 
     const setCanvasWidth = () => {
         const context = document.querySelector("canvas").getContext("2d");
@@ -137,6 +190,7 @@ function GUI() {
                 <Button
                     style={styles.button}
                     label="Animate"
+                    onPress={drawFerrersDiagram}
                     disabled={buttonIsDisabled}
                 />
             </FlexBox>
