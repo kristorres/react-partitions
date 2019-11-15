@@ -1,6 +1,6 @@
-const {PI: π} = Math;
+const {PI: π, floor} = Math;
 
-const DotCanvas = (selector) => {
+const DotCanvas = (selector, latticeUnit) => {
 
     const context = document.querySelector(selector).getContext("2d");
     const dots = [];
@@ -26,6 +26,15 @@ const DotCanvas = (selector) => {
             }
         },
         clear,
+        cut: (a, b, c, color1, color2) => {
+            clear();
+            for (const dot of dots) {
+                const x = floor(dot.x / latticeUnit);
+                const y = floor(dot.y / latticeUnit);
+                dot.color = (a * x + b * y < c) ? color2 : color1;
+                drawDot(dot);
+            }
+        },
         draw: () => {
             clear();
             for (const dot of dots) {
