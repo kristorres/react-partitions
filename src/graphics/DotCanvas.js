@@ -19,6 +19,13 @@ const DotCanvas = (selector, latticeUnit) => {
         context.stroke();
     };
 
+    const drawDots = () => {
+        clear();
+        for (const dot of dots) {
+            drawDot(dot);
+        }
+    };
+
     return {
         addDots: (newDots) => {
             for (const dot of newDots) {
@@ -35,11 +42,31 @@ const DotCanvas = (selector, latticeUnit) => {
                 drawDot(dot);
             }
         },
-        draw: () => {
-            clear();
-            for (const dot of dots) {
-                drawDot(dot);
+        draw: drawDots,
+        move: (color, dx, dy) => {
+            if (dx === 0 && dy === 0) {
+                return;
             }
+            const dotsToMove = dots.filter(
+                (dot) => dot.color === color
+            );
+            if (dotsToMove.length === 0) {
+                return;
+            }
+            const xFinal = dotsToMove[0].x + latticeUnit * dx;
+            const yFinal = dotsToMove[0].y + latticeUnit * dy;
+            const animate = () => {
+                if (xFinal === dotsToMove[0].x && yFinal === dotsToMove[0].y) {
+                    return;
+                }
+                for (const dot of dotsToMove) {
+                    dot.x += dx;
+                    dot.y += dy;
+                }
+                drawDots();
+                requestAnimationFrame(animate);
+            };
+            animate();
         }
     };
 };
