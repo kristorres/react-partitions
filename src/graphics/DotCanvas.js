@@ -67,6 +67,15 @@ const DotCanvas = (selector, latticeUnit) => {
                 requestAnimationFrame(animate);
             };
             animate();
+        },
+        paste: (inputColor1, inputColor2, outputColor) => {
+            clear();
+            for (const dot of dots) {
+                if (dot.color === inputColor1 || dot.color === inputColor2) {
+                    dot.color = outputColor;
+                }
+                drawDot(dot);
+            }
         }
     };
 };
