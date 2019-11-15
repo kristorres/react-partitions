@@ -5,9 +5,8 @@ import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
 import {useComponentDidMount, useMedia} from "../../../hooks.js";
+import DotCanvas from "../../../graphics/DotCanvas.js";
 import IntegerPartition from "../../../math/IntegerPartition.js";
-
-const {PI: π} = Math;
 
 const styles = {
     root: {
@@ -110,23 +109,11 @@ function GUI() {
         return dots;
     };
 
-    const drawDot = (dot, context) => {
-        context.beginPath();
-        context.arc(dot.x, dot.y, dot.radius, 0, 2 * π, true);
-        context.fillStyle = dot.color;
-        context.fill();
-        context.lineWidth = 2;
-        context.strokeStyle = "black";
-        context.stroke();
-    };
-
     const drawFerrersDiagram = () => {
         const ferrersDiagram = createFerrersDiagram();
-        const context = document.querySelector("canvas").getContext("2d");
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        for (const dot of ferrersDiagram) {
-            drawDot(dot, context);
-        }
+        const canvas = DotCanvas("canvas");
+        canvas.addDots(ferrersDiagram);
+        canvas.draw();
     };
 
     const setCanvasWidth = () => {
