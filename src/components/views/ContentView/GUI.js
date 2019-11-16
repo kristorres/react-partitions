@@ -5,6 +5,7 @@ import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
 import {useComponentDidMount, useMedia} from "../../../hooks.js";
+import Color from "../../../graphics/Color.js";
 import DotCanvas from "../../../graphics/DotCanvas.js";
 import IntegerPartition from "../../../math/IntegerPartition.js";
 
@@ -32,6 +33,12 @@ const styles = {
     }
 };
 
+const pause = (numberOfSeconds) => {
+    return new Promise(
+        (resolve) => setTimeout(resolve, numberOfSeconds * 1000)
+    );
+};
+
 const bijections = {
     "Strike-slip": {
         description: (
@@ -40,6 +47,14 @@ const bijections = {
         validatePartitionSize: (n) => true,
         generateRandomPartition: (n) => {
             return IntegerPartition.generateRandom(n);
+        },
+        animate: async (canvas) => {
+            canvas.cut(-1, 1, 0, Color.Purple, Color.Azure);
+            await pause(0.5);
+            canvas.move(Color.Purple, 0, 1);
+            canvas.move(Color.Azure, -1, 0);
+            await pause(1);
+            canvas.paste(Color.Purple, Color.Azure, Color.CobaltBlue);
         }
     },
     "Shred-and-stretch": {
@@ -49,6 +64,8 @@ const bijections = {
         validatePartitionSize: (n) => n % 2 === 0,
         generateRandomPartition: (n) => {
             return IntegerPartition.generateRandom(n, "even");
+        },
+        animate: async (canvas) => {
         }
     },
     "Cut-and-stretch": {
@@ -58,6 +75,8 @@ const bijections = {
         validatePartitionSize: (n) => n !== 2,
         generateRandomPartition: (n) => {
             return IntegerPartition.generateRandomSelfConjugate(n);
+        },
+        animate: async (canvas) => {
         }
     },
     "Sylvester/Glaisher": {
@@ -67,6 +86,8 @@ const bijections = {
         validatePartitionSize: (n) => true,
         generateRandomPartition: (n) => {
             return IntegerPartition.generateRandom(n, "odd");
+        },
+        animate: async (canvas) => {
         }
     }
 };
@@ -90,11 +111,12 @@ function GUI() {
         || bijection.validatePartitionSize(partitionSize) === false
     );
 
+    const dotRadius = 5;
+    const latticeUnit = dotRadius * 3;
+
     const createFerrersDiagram = () => {
         const partition = bijection.generateRandomPartition(partitionSize);
         const dots = [];
-        const dotRadius = 5;
-        const latticeUnit = dotRadius * 3;
         const offset = dotRadius * 2;
         for (let i = 0; i < partition.length; i += 1) {
             for (let j = 0; j < partition[i]; j += 1) {
@@ -102,18 +124,20 @@ function GUI() {
                     x: j * latticeUnit + offset,
                     y: i * latticeUnit + offset,
                     radius: dotRadius,
-                    color: "blue"
+                    color: Color.CobaltBlue
                 });
             }
         }
         return dots;
     };
 
-    const drawFerrersDiagram = () => {
+    const animateBijection = async () => {
         const ferrersDiagram = createFerrersDiagram();
-        const canvas = DotCanvas("canvas");
+        const canvas = DotCanvas("canvas", latticeUnit);
         canvas.addDots(ferrersDiagram);
         canvas.draw();
+        await pause(0.5);
+        await bijection.animate(canvas);
     };
 
     const setCanvasWidth = () => {
@@ -177,7 +201,7 @@ function GUI() {
                 <Button
                     style={styles.button}
                     label="Animate"
-                    onPress={drawFerrersDiagram}
+                    onPress={animateBijection}
                     disabled={buttonIsDisabled}
                 />
             </FlexBox>
