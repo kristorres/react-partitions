@@ -76,6 +76,18 @@ const DotCanvas = (selector, latticeUnit) => {
                 }
                 drawDot(dot);
             }
+        },
+        shred: (...colors) => {
+            const colorCount = colors.length;
+            if (colorCount === 0) {
+                return;
+            }
+            clear();
+            for (const dot of dots) {
+                const x = floor(dot.x / latticeUnit);
+                dot.color = colors[x % colorCount];
+                drawDot(dot);
+            }
         }
     };
 };
