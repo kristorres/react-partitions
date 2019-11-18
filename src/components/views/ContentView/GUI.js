@@ -66,6 +66,19 @@ const bijections = {
             return IntegerPartition.generateRandom(n, "even");
         },
         animate: async (canvas) => {
+            canvas.shred(Color.Purple, Color.Aquamarine);
+            await pause(0.5);
+            canvas.move(Color.Purple, 1, 0);
+            await pause(1);
+            canvas.stretch(Color.Purple, 0.5, 0.5);
+            canvas.stretch(Color.Aquamarine, 0.5, 0.5);
+            await pause(1);
+            canvas.move(Color.Purple, 0, 1);
+            await pause(1);
+            canvas.paste(Color.Purple, Color.Aquamarine, Color.CobaltBlue);
+            await pause(0.5);
+            canvas.transpose();
+            await pause(1);
         }
     },
     "Cut-and-stretch": {
