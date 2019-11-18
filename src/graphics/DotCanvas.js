@@ -124,6 +124,33 @@ const DotCanvas = (selector, latticeUnit) => {
                 requestAnimationFrame(animate);
             };
             animate();
+        },
+        transpose: () => {
+            const dotsToMove = dots.map(
+                (dot) => {
+                    const dx = floor((dot.y - dot.x) / latticeUnit);
+                    const dy = floor((dot.x - dot.y) / latticeUnit);
+                    return [dot, dx, dy];
+                }
+            );
+            if (dotsToMove.length === 0) {
+                return;
+            }
+            const [lastDot, dx, dy] = dotsToMove[dotsToMove.length - 1];
+            const xFinal = lastDot.x + latticeUnit * dx;
+            const yFinal = lastDot.y + latticeUnit * dy;
+            const animate = () => {
+                if (xFinal === lastDot.x && yFinal === lastDot.y) {
+                    return;
+                }
+                for (const [dot, dx, dy] of dotsToMove) {
+                    dot.x += dx;
+                    dot.y += dy;
+                }
+                drawDots();
+                requestAnimationFrame(animate);
+            };
+            animate();
         }
     };
 };
