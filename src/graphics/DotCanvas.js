@@ -88,6 +88,42 @@ const DotCanvas = (selector, latticeUnit) => {
                 dot.color = colors[x % colorCount];
                 drawDot(dot);
             }
+        },
+        stretch: (color, k, l) => {
+            if (l === 0 || (k === 1 && l === 1)) {
+                return;
+            }
+            const dotsToMove = dots
+                .filter(
+                    (dot) => dot.color === color
+                )
+                .map(
+                    (dot) => {
+                        const x = floor(dot.x / latticeUnit);
+                        const y = floor(dot.y / latticeUnit);
+                        const dx = floor(x * k) - x;
+                        const dy = floor(y / l) - y;
+                        return [dot, dx, dy];
+                    }
+                );
+            if (dotsToMove.length === 0) {
+                return;
+            }
+            const [firstDot, dx, dy] = dotsToMove[0];
+            const xFinal = firstDot.x + latticeUnit * dx;
+            const yFinal = firstDot.y + latticeUnit * dy;
+            const animate = () => {
+                if (xFinal === firstDot.x && yFinal === firstDot.y) {
+                    return;
+                }
+                for (const [dot, dx, dy] of dotsToMove) {
+                    dot.x += dx;
+                    dot.y += dy;
+                }
+                drawDots();
+                requestAnimationFrame(animate);
+            };
+            animate();
         }
     };
 };
