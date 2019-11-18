@@ -77,6 +77,42 @@ const DotCanvas = (selector, latticeUnit) => {
                 drawDot(dot);
             }
         },
+        shift: (color, a, b, c, d) => {
+            const dotsToMove = dots
+                .filter(
+                    (dot) => dot.color === color
+                )
+                .map(
+                    (dot) => {
+                        const xInitial = floor(dot.x / latticeUnit);
+                        const yInitial = floor(dot.y / latticeUnit);
+                        const xFinal = a * xInitial + b * yInitial;
+                        const yFinal = c * xInitial + d * yInitial;
+                        return [dot, xFinal - xInitial, yFinal - yInitial];
+                    }
+                )
+                .filter(
+                    ([, dx, dy]) => dx !== 0 || dy !== 0
+                );
+            if (dotsToMove.length === 0) {
+                return;
+            }
+            const [firstDot, dx, dy] = dotsToMove[0];
+            const xFinal = firstDot.x + latticeUnit * dx;
+            const yFinal = firstDot.y + latticeUnit * dy;
+            const animate = () => {
+                if (xFinal === firstDot.x && yFinal === firstDot.y) {
+                    return;
+                }
+                for (const [dot, dx, dy] of dotsToMove) {
+                    dot.x += dx;
+                    dot.y += dy;
+                }
+                drawDots();
+                requestAnimationFrame(animate);
+            };
+            animate();
+        },
         shred: (...colors) => {
             const colorCount = colors.length;
             if (colorCount === 0) {
