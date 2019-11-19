@@ -77,7 +77,7 @@ const bijections = {
             await pause(1);
             canvas.paste(Color.Purple, Color.Aquamarine, Color.CobaltBlue);
             await pause(0.5);
-            canvas.transpose();
+            canvas.transpose(Color.CobaltBlue);
             await pause(1);
         }
     },
