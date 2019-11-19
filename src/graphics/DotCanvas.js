@@ -103,15 +103,17 @@ const DotCanvas = (selector, latticeUnit) => {
                 (x, y) => [a * x + b * y, c * x + d * y]
             );
         },
-        shred: (...colors) => {
-            const colorCount = colors.length;
-            if (colorCount === 0) {
+        shred: (inputColor, ...outputColors) => {
+            const outputColorCount = outputColors.length;
+            if (outputColorCount === 0) {
                 return;
             }
             clear();
             for (const dot of dots) {
-                const x = floor(dot.x / latticeUnit);
-                dot.color = colors[x % colorCount];
+                if (dot.color === inputColor) {
+                    const x = floor(dot.x / latticeUnit);
+                    dot.color = outputColors[x % outputColorCount];
+                }
                 drawDot(dot);
             }
         },

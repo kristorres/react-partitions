@@ -66,7 +66,7 @@ const bijections = {
             return IntegerPartition.generateRandom(n, "even");
         },
         animate: async (canvas) => {
-            canvas.shred(Color.Purple, Color.Aquamarine);
+            canvas.shred(Color.CobaltBlue, Color.Purple, Color.Aquamarine);
             await pause(0.5);
             canvas.move(Color.Purple, 1, 0);
             await pause(1);
