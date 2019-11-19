@@ -90,6 +90,21 @@ const bijections = {
             return IntegerPartition.generateRandomSelfConjugate(n);
         },
         animate: async (canvas) => {
+            canvas.cut(-1, 1, 1, Color.Purple, Color.DarkCyan);
+            await pause(0.5);
+            canvas.shift(Color.DarkCyan, 1, -1, 0, 1);
+            canvas.shift(Color.Purple, 1, 0, -1, 1);
+            await pause(1);
+            canvas.move(Color.Purple, 0, -1);
+            await pause(1);
+            canvas.transpose(Color.Purple);
+            await pause(1);
+            canvas.stretch(Color.DarkCyan, 2, 1);
+            canvas.stretch(Color.Purple, 2, 1);
+            await pause(1);
+            canvas.move(Color.Purple, 1, 0);
+            await pause(1);
+            canvas.paste(Color.Purple, Color.DarkCyan, Color.CobaltBlue);
         }
     },
     "Sylvester/Glaisher": {
