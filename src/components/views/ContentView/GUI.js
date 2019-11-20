@@ -116,6 +116,48 @@ const bijections = {
             return IntegerPartition.generateRandom(n, "odd");
         },
         animate: async (canvas) => {
+            canvas.cut(-1, 2, 0, Color.Carnelian, Color.CobaltBlue);
+            await pause(0.5);
+            canvas.move(Color.CobaltBlue, -1, 0);
+            await pause(1);
+            canvas.shift(Color.CobaltBlue, 1, -2, 0, 1);
+            await pause(1);
+            canvas.shred(Color.CobaltBlue, Color.CobaltBlue, Color.KellyGreen);
+            await pause(0.5);
+            canvas.move(Color.CobaltBlue, 1, 0);
+            await pause(1);
+            canvas.stretch(Color.CobaltBlue, 0.5, 0.5);
+            canvas.stretch(Color.KellyGreen, 0.5, 0.5);
+            await pause(1);
+            canvas.move(Color.KellyGreen, 0, 1);
+            await pause(1);
+            canvas.paste(Color.CobaltBlue, Color.KellyGreen, Color.Gold);
+            await pause(0.5);
+            canvas.shred(Color.Carnelian, Color.Carnelian, Color.Aquamarine);
+            await pause(0.5);
+            canvas.move(Color.Carnelian, 1, 0);
+            await pause(1);
+            canvas.stretch(Color.Carnelian, 0.5, 1);
+            canvas.stretch(Color.Aquamarine, 0.5, 1);
+            await pause(1);
+            canvas.move(Color.Aquamarine, 0, -1);
+            await pause(1);
+            canvas.shift(Color.Carnelian, 1, 0, -1, 1);
+            canvas.shift(Color.Aquamarine, 1, 0, -1, 1);
+            await pause(1);
+            canvas.transpose(Color.Carnelian);
+            canvas.transpose(Color.Aquamarine);
+            await pause(1);
+            canvas.stretch(Color.Carnelian, 1, 0.5);
+            canvas.stretch(Color.Aquamarine, 1, 0.5);
+            await pause(1);
+            canvas.move(Color.Aquamarine, 0, 1);
+            await pause(1);
+            canvas.paste(Color.Carnelian, Color.Aquamarine, Color.Carnelian);
+            await pause(0.5);
+            canvas.add(Color.Gold, Color.Carnelian);
+            await pause(1);
+            canvas.paste(Color.Gold, Color.Carnelian, Color.CobaltBlue);
         }
     }
 };
