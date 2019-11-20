@@ -3,7 +3,7 @@ const {PI: π, floor} = Math;
 const DotCanvas = (selector, latticeUnit) => {
 
     const context = document.querySelector(selector).getContext("2d");
-    const dots = [];
+    let dots = [];
 
     const erase = () => {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -114,6 +114,10 @@ const DotCanvas = (selector, latticeUnit) => {
                 }
                 drawDot(dot);
             }
+        },
+        reset: () => {
+            erase();
+            dots = [];
         },
         shift: (color, a, b, c, d) => {
             transform(
