@@ -5,7 +5,7 @@ const DotCanvas = (selector, latticeUnit) => {
     const context = document.querySelector(selector).getContext("2d");
     const dots = [];
 
-    const clear = () => {
+    const erase = () => {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     };
 
@@ -20,7 +20,7 @@ const DotCanvas = (selector, latticeUnit) => {
     };
 
     const drawDots = () => {
-        clear();
+        erase();
         for (const dot of dots) {
             drawDot(dot);
         }
@@ -81,9 +81,8 @@ const DotCanvas = (selector, latticeUnit) => {
                 (x, y) => [x + (parts.get(y) ?? 0), y]
             );
         },
-        clear,
         cut: (a, b, c, color1, color2) => {
-            clear();
+            erase();
             for (const dot of dots) {
                 const x = floor(dot.x / latticeUnit);
                 const y = floor(dot.y / latticeUnit);
@@ -92,6 +91,7 @@ const DotCanvas = (selector, latticeUnit) => {
             }
         },
         draw: drawDots,
+        erase,
         insertDots: (newDots) => {
             for (const dot of newDots) {
                 dots.push(dot);
@@ -107,7 +107,7 @@ const DotCanvas = (selector, latticeUnit) => {
             );
         },
         paste: (inputColor1, inputColor2, outputColor) => {
-            clear();
+            erase();
             for (const dot of dots) {
                 if (dot.color === inputColor1 || dot.color === inputColor2) {
                     dot.color = outputColor;
@@ -126,7 +126,7 @@ const DotCanvas = (selector, latticeUnit) => {
             if (outputColorCount === 0) {
                 return;
             }
-            clear();
+            erase();
             for (const dot of dots) {
                 if (dot.color === inputColor) {
                     const x = floor(dot.x / latticeUnit);
