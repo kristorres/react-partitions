@@ -8,6 +8,9 @@ const DotCanvas = (selector, dotRadius) => {
     const offset = dotRadius * 2;
     let dots = [];
 
+    const toLatticeUnits = (pixels) => floor(pixels / latticeUnit);
+    const toPixels = (latticeUnits) => latticeUnits * latticeUnit + offset;
+
     const erase = () => {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     };
@@ -36,8 +39,8 @@ const DotCanvas = (selector, dotRadius) => {
             )
             .map(
                 (dot) => {
-                    const xInitial = floor(dot.x / latticeUnit);
-                    const yInitial = floor(dot.y / latticeUnit);
+                    const xInitial = toLatticeUnits(dot.x);
+                    const yInitial = toLatticeUnits(dot.y);
                     const [xFinal, yFinal] = f(xInitial, yInitial);
                     return [dot, xFinal - xInitial, yFinal - yInitial];
                 }
@@ -70,8 +73,8 @@ const DotCanvas = (selector, dotRadius) => {
             const parts = new Map();
             for (const dot of dots) {
                 if (dot.color === color1) {
-                    const x = floor(dot.x / latticeUnit);
-                    const y = floor(dot.y / latticeUnit);
+                    const x = toLatticeUnits(dot.x);
+                    const y = toLatticeUnits(dot.y);
                     const currentPart = parts.get(y);
                     const newPart = x + 1;
                     if (currentPart === undefined || currentPart < newPart) {
@@ -87,8 +90,8 @@ const DotCanvas = (selector, dotRadius) => {
         cut: (a, b, c, color1, color2) => {
             erase();
             for (const dot of dots) {
-                const x = floor(dot.x / latticeUnit);
-                const y = floor(dot.y / latticeUnit);
+                const x = toLatticeUnits(dot.x);
+                const y = toLatticeUnits(dot.y);
                 dot.color = (a * x + b * y < c) ? color2 : color1;
                 drawDot(dot);
             }
@@ -98,8 +101,8 @@ const DotCanvas = (selector, dotRadius) => {
         insertDots: (newDots) => {
             for (const dot of newDots) {
                 dots.push({
-                    x: dot.x * latticeUnit + offset,
-                    y: dot.y * latticeUnit + offset,
+                    x: toPixels(dot.x),
+                    y: toPixels(dot.y),
                     color: dot.color
                 });
             }
@@ -140,7 +143,7 @@ const DotCanvas = (selector, dotRadius) => {
             erase();
             for (const dot of dots) {
                 if (dot.color === inputColor) {
-                    const x = floor(dot.x / latticeUnit);
+                    const x = toLatticeUnits(dot.x);
                     dot.color = outputColors[x % outputColorCount];
                 }
                 drawDot(dot);
