@@ -204,7 +204,7 @@ function GUI() {
     const animateBijection = async () => {
         const ferrersDiagram = createFerrersDiagram();
         const canvas = DotCanvas("canvas", latticeUnit);
-        canvas.addDots(ferrersDiagram);
+        canvas.insertDots(ferrersDiagram);
         canvas.draw();
         await pause(0.5);
         await bijection.animate(canvas);

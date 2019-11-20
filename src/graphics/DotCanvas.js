@@ -81,11 +81,6 @@ const DotCanvas = (selector, latticeUnit) => {
                 (x, y) => [x + (parts.get(y) ?? 0), y]
             );
         },
-        addDots: (newDots) => {
-            for (const dot of newDots) {
-                dots.push(dot);
-            }
-        },
         clear,
         cut: (a, b, c, color1, color2) => {
             clear();
@@ -97,6 +92,11 @@ const DotCanvas = (selector, latticeUnit) => {
             }
         },
         draw: drawDots,
+        insertDots: (newDots) => {
+            for (const dot of newDots) {
+                dots.push(dot);
+            }
+        },
         move: (color, dx, dy) => {
             if (dx === 0 && dy === 0) {
                 return;
