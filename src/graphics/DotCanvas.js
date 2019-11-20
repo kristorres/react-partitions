@@ -1,8 +1,11 @@
 const {PI: π, floor} = Math;
 
-const DotCanvas = (selector, latticeUnit) => {
+const DotCanvas = (selector, dotRadius) => {
 
     const context = document.querySelector(selector).getContext("2d");
+
+    const latticeUnit = dotRadius * 3;
+    const offset = dotRadius * 2;
     let dots = [];
 
     const erase = () => {
@@ -11,7 +14,7 @@ const DotCanvas = (selector, latticeUnit) => {
 
     const drawDot = (dot) => {
         context.beginPath();
-        context.arc(dot.x, dot.y, dot.radius, 0, 2 * π, true);
+        context.arc(dot.x, dot.y, dotRadius, 0, 2 * π, true);
         context.fillStyle = dot.color;
         context.fill();
         context.lineWidth = 2;
@@ -94,7 +97,11 @@ const DotCanvas = (selector, latticeUnit) => {
         erase,
         insertDots: (newDots) => {
             for (const dot of newDots) {
-                dots.push(dot);
+                dots.push({
+                    x: dot.x * latticeUnit + offset,
+                    y: dot.y * latticeUnit + offset,
+                    color: dot.color
+                });
             }
         },
         move: (color, dx, dy) => {

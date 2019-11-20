@@ -181,19 +181,14 @@ function GUI() {
         || bijection.validatePartitionSize(partitionSize) === false
     );
 
-    const dotRadius = 5;
-    const latticeUnit = dotRadius * 3;
-
     const createFerrersDiagram = () => {
         const partition = bijection.generateRandomPartition(partitionSize);
         const dots = [];
-        const offset = dotRadius * 2;
         for (let i = 0; i < partition.length; i += 1) {
             for (let j = 0; j < partition[i]; j += 1) {
                 dots.push({
-                    x: j * latticeUnit + offset,
-                    y: i * latticeUnit + offset,
-                    radius: dotRadius,
+                    x: j,
+                    y: i,
                     color: Color.CobaltBlue
                 });
             }
@@ -203,7 +198,7 @@ function GUI() {
 
     const animateBijection = async () => {
         const ferrersDiagram = createFerrersDiagram();
-        const canvas = DotCanvas("canvas", latticeUnit);
+        const canvas = DotCanvas("canvas", 5);
         canvas.insertDots(ferrersDiagram);
         canvas.draw();
         await pause(0.5);
