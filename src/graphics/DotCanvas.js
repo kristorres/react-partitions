@@ -63,6 +63,24 @@ const DotCanvas = (selector, latticeUnit) => {
     };
 
     return {
+        add: (color1, color2) => {
+            const parts = new Map();
+            for (const dot of dots) {
+                if (dot.color === color1) {
+                    const x = floor(dot.x / latticeUnit);
+                    const y = floor(dot.y / latticeUnit);
+                    const currentPart = parts.get(y);
+                    const newPart = x + 1;
+                    if (currentPart === undefined || currentPart < newPart) {
+                        parts.set(y, newPart);
+                    }
+                }
+            }
+            transform(
+                color2,
+                (x, y) => [x + (parts.get(y) ?? 0), y]
+            );
+        },
         addDots: (newDots) => {
             for (const dot of newDots) {
                 dots.push(dot);
