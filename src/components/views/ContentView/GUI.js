@@ -5,7 +5,6 @@ import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
 import {useComponentDidMount, useMedia} from "../../../hooks.js";
-import Color from "../../../graphics/Color.js";
 import DotCanvas from "../../../graphics/DotCanvas.js";
 import IntegerPartition from "../../../math/IntegerPartition.js";
 
@@ -39,6 +38,8 @@ const pause = (numberOfSeconds) => {
     );
 };
 
+const partitionColor = "rgb(40, 40, 204)";
+
 const bijections = {
     "Strike-slip": {
         description: (
@@ -49,12 +50,14 @@ const bijections = {
             return IntegerPartition.generateRandom(n);
         },
         animate: async (canvas) => {
-            canvas.cut(-1, 1, 0, Color.Purple, Color.Azure);
+            const color1 = "rgb(126, 48, 177)";
+            const color2 = "rgb(102, 152, 255)";
+            canvas.cut(-1, 1, 0, color1, color2);
             await pause(0.5);
-            canvas.move(Color.Purple, 0, 1);
-            canvas.move(Color.Azure, -1, 0);
+            canvas.move(color1, 0, 1);
+            canvas.move(color2, -1, 0);
             await pause(1);
-            canvas.paste(Color.Purple, Color.Azure, Color.CobaltBlue);
+            canvas.paste(color1, color2, partitionColor);
         }
     },
     "Shred-and-stretch": {
@@ -66,18 +69,20 @@ const bijections = {
             return IntegerPartition.generateRandom(n, "even");
         },
         animate: async (canvas) => {
-            canvas.shred(Color.CobaltBlue, Color.Purple, Color.Aquamarine);
+            const color1 = "rgba(154, 29, 125, 0.5)";
+            const color2 = "rgba(102, 255, 204, 0.5)";
+            canvas.shred(partitionColor, color1, color2);
             await pause(0.5);
-            canvas.move(Color.Purple, 1, 0);
+            canvas.move(color1, 1, 0);
             await pause(1);
-            canvas.stretch(Color.Purple, 0.5, 0.5);
-            canvas.stretch(Color.Aquamarine, 0.5, 0.5);
+            canvas.stretch(color1, 0.5, 0.5);
+            canvas.stretch(color2, 0.5, 0.5);
             await pause(1);
-            canvas.move(Color.Purple, 0, 1);
+            canvas.move(color1, 0, 1);
             await pause(1);
-            canvas.paste(Color.Purple, Color.Aquamarine, Color.CobaltBlue);
+            canvas.paste(color1, color2, partitionColor);
             await pause(0.5);
-            canvas.transpose(Color.CobaltBlue);
+            canvas.transpose(partitionColor);
             await pause(1);
         }
     },
@@ -90,21 +95,23 @@ const bijections = {
             return IntegerPartition.generateRandomSelfConjugate(n);
         },
         animate: async (canvas) => {
-            canvas.cut(-1, 1, 1, Color.Purple, Color.DarkCyan);
+            const color1 = "rgba(168, 32, 133, 0.5)";
+            const color2 = "rgba(73, 146, 184, 0.5)";
+            canvas.cut(-1, 1, 1, color1, color2);
             await pause(0.5);
-            canvas.shift(Color.DarkCyan, 1, -1, 0, 1);
-            canvas.shift(Color.Purple, 1, 0, -1, 1);
+            canvas.shift(color2, 1, -1, 0, 1);
+            canvas.shift(color1, 1, 0, -1, 1);
             await pause(1);
-            canvas.move(Color.Purple, 0, -1);
+            canvas.move(color1, 0, -1);
             await pause(1);
-            canvas.transpose(Color.Purple);
+            canvas.transpose(color1);
             await pause(1);
-            canvas.stretch(Color.DarkCyan, 2, 1);
-            canvas.stretch(Color.Purple, 2, 1);
+            canvas.stretch(color2, 2, 1);
+            canvas.stretch(color1, 2, 1);
             await pause(1);
-            canvas.move(Color.Purple, 1, 0);
+            canvas.move(color1, 1, 0);
             await pause(1);
-            canvas.paste(Color.Purple, Color.DarkCyan, Color.CobaltBlue);
+            canvas.paste(color1, color2, partitionColor);
         }
     },
     "Sylvester/Glaisher": {
@@ -116,48 +123,54 @@ const bijections = {
             return IntegerPartition.generateRandom(n, "odd");
         },
         animate: async (canvas) => {
-            canvas.cut(-1, 2, 0, Color.Carnelian, Color.CobaltBlue);
+            const upperColor1 = "rgba(204, 204, 1, 0.5)";
+            const upperColor2 = "rgba(50, 51, 255, 0.5)";
+            const upperColor3 = "rgba(1, 204, 52, 0.5)";
+            const lowerColor1 = "rgba(167, 0, 0, 0.5)";
+            const lowerColor2 = "rgba(204, 0, 0, 0.5)";
+            const lowerColor3 = "rgba(52, 255, 204, 0.5)";
+            canvas.cut(-1, 2, 0, lowerColor1, upperColor1);
             await pause(0.5);
-            canvas.move(Color.CobaltBlue, -1, 0);
+            canvas.move(upperColor1, -1, 0);
             await pause(1);
-            canvas.shift(Color.CobaltBlue, 1, -2, 0, 1);
+            canvas.shift(upperColor1, 1, -2, 0, 1);
             await pause(1);
-            canvas.shred(Color.CobaltBlue, Color.CobaltBlue, Color.KellyGreen);
+            canvas.shred(upperColor1, upperColor2, upperColor3);
             await pause(0.5);
-            canvas.move(Color.CobaltBlue, 1, 0);
+            canvas.move(upperColor2, 1, 0);
             await pause(1);
-            canvas.stretch(Color.CobaltBlue, 0.5, 0.5);
-            canvas.stretch(Color.KellyGreen, 0.5, 0.5);
+            canvas.stretch(upperColor2, 0.5, 0.5);
+            canvas.stretch(upperColor3, 0.5, 0.5);
             await pause(1);
-            canvas.move(Color.KellyGreen, 0, 1);
+            canvas.move(upperColor3, 0, 1);
             await pause(1);
-            canvas.paste(Color.CobaltBlue, Color.KellyGreen, Color.Gold);
+            canvas.paste(upperColor2, upperColor3, upperColor1);
             await pause(0.5);
-            canvas.shred(Color.Carnelian, Color.Carnelian, Color.Aquamarine);
+            canvas.shred(lowerColor1, lowerColor2, lowerColor3);
             await pause(0.5);
-            canvas.move(Color.Carnelian, 1, 0);
+            canvas.move(lowerColor2, 1, 0);
             await pause(1);
-            canvas.stretch(Color.Carnelian, 0.5, 1);
-            canvas.stretch(Color.Aquamarine, 0.5, 1);
+            canvas.stretch(lowerColor2, 0.5, 1);
+            canvas.stretch(lowerColor3, 0.5, 1);
             await pause(1);
-            canvas.move(Color.Aquamarine, 0, -1);
+            canvas.move(lowerColor3, 0, -1);
             await pause(1);
-            canvas.shift(Color.Carnelian, 1, 0, -1, 1);
-            canvas.shift(Color.Aquamarine, 1, 0, -1, 1);
+            canvas.shift(lowerColor2, 1, 0, -1, 1);
+            canvas.shift(lowerColor3, 1, 0, -1, 1);
             await pause(1);
-            canvas.transpose(Color.Carnelian);
-            canvas.transpose(Color.Aquamarine);
+            canvas.transpose(lowerColor2);
+            canvas.transpose(lowerColor3);
             await pause(1);
-            canvas.stretch(Color.Carnelian, 1, 0.5);
-            canvas.stretch(Color.Aquamarine, 1, 0.5);
+            canvas.stretch(lowerColor2, 1, 0.5);
+            canvas.stretch(lowerColor3, 1, 0.5);
             await pause(1);
-            canvas.move(Color.Aquamarine, 0, 1);
+            canvas.move(lowerColor3, 0, 1);
             await pause(1);
-            canvas.paste(Color.Carnelian, Color.Aquamarine, Color.Carnelian);
+            canvas.paste(lowerColor2, lowerColor3, lowerColor1);
             await pause(0.5);
-            canvas.add(Color.Gold, Color.Carnelian);
+            canvas.add(upperColor1, lowerColor1);
             await pause(1);
-            canvas.paste(Color.Gold, Color.Carnelian, Color.CobaltBlue);
+            canvas.paste(upperColor1, lowerColor1, partitionColor);
         }
     }
 };
@@ -189,7 +202,7 @@ function GUI() {
                 dots.push({
                     x: j,
                     y: i,
-                    color: Color.CobaltBlue
+                    color: partitionColor
                 });
             }
         }
