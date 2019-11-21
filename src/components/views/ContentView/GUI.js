@@ -5,8 +5,8 @@ import Button from "../../controls/Button.js";
 import IntegerTextField from "../../controls/IntegerTextField.js";
 import SelectMenu from "../../controls/SelectMenu.js";
 import {useComponentDidMount, useMedia} from "../../../hooks.js";
-import DotCanvas from "../../../graphics/DotCanvas.js";
 import IntegerPartition from "../../../math/IntegerPartition.js";
+import DotCanvas from "../../../models/DotCanvas.js";
 
 const styles = {
     root: {
