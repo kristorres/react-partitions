@@ -179,6 +179,7 @@ function GUI() {
 
     const [partitionSizeString, setPartitionSizeString] = useState("");
     const [bijectionName, setBijectionName] = useState(null);
+    const [canvasIsAnimating, setCanvasIsAnimating] = useState(false);
 
     const windowWidthIsExtraSmall = useMedia("(min-width: 600px)") === false;
     const windowWidthIsAtLeastMedium = useMedia("(min-width: 960px)");
@@ -189,7 +190,8 @@ function GUI() {
     const partitionSize = parseInt(partitionSizeString, 10);
     const bijection = bijections[bijectionName];
     const buttonIsDisabled = (
-        isNaN(partitionSize)
+        canvasIsAnimating
+        || isNaN(partitionSize)
         || bijectionName === null
         || bijection.validatePartitionSize(partitionSize) === false
     );
@@ -214,8 +216,10 @@ function GUI() {
         const canvas = DotCanvas("canvas", 5);
         canvas.insertDots(ferrersDiagram);
         canvas.draw();
+        setCanvasIsAnimating(true);
         await pause(0.5);
         await bijection.animate(canvas);
+        setCanvasIsAnimating(false);
     };
 
     const setCanvasWidth = () => {
