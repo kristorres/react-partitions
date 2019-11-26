@@ -53,14 +53,6 @@ a:active {
     height: $mdc-select-height;
 }
 
-.hello-world {
-    padding: 48px 24px;
-}
-
-.hello-world h1 {
-    text-align: center;
-}
-
 footer {
     @include mdc-elevation(2);
     padding: 24px;
