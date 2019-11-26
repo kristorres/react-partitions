@@ -49,6 +49,10 @@ a:active {
     text-decoration: none;
 }
 
+.mdc-select {
+    height: $mdc-select-height;
+}
+
 .hello-world {
     padding: 48px 24px;
 }

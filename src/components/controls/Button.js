@@ -18,6 +18,7 @@ function Button({label, onPress, disabled, style}) {
             onClick={onPress}
             disabled={(disabled) ? "disabled" : null}
         >
+            <div className="mdc-button__ripple"></div>
             <span className="mdc-button__label">{label}</span>
         </button>
     );
