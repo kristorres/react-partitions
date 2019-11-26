@@ -14,6 +14,9 @@ function NavigationBar() {
                         kristorres.github.io
                     </span>
                 </section>
+                <section className={itemAlignmentClassName("align-end")}>
+                    <span className="mdc-typography--body1">v0.0.1</span>
+                </section>
             </div>
         </nav>
     );
