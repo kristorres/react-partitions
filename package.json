@@ -1,7 +1,7 @@
 {
   "name": "react-partitions",
   "description": "A web app that models bijections of integer partitions.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material/button": "^4.0.0",
