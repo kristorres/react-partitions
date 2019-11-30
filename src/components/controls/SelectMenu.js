@@ -49,23 +49,25 @@ function SelectMenu({label, value, options, setValue, width, style}) {
             className={`mdc-select mdc-select--outlined ${id}`}
             style={{...styles.width, ...style}}
         >
-            <input type="hidden" name="enhanced-select"/>
-            <i className="mdc-select__dropdown-icon"></i>
-            <div className="mdc-select__selected-text">{currentValue}</div>
+            <div className="mdc-select__anchor" style={styles.width}>
+                <i className="mdc-select__dropdown-icon"></i>
+                <div className="mdc-select__selected-text">{currentValue}</div>
+                <div className="mdc-notched-outline">
+                    <div className="mdc-notched-outline__leading"></div>
+                    <div className="mdc-notched-outline__notch">
+                        <label className="mdc-floating-label">{label}</label>
+                    </div>
+                    <div className="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
             <div
                 className="mdc-select__menu mdc-menu mdc-menu-surface"
                 style={styles.width}
+                role="listbox"
             >
                 <ul className="mdc-list">
                     {menuItems}
                 </ul>
-            </div>
-            <div className="mdc-notched-outline">
-                <div className="mdc-notched-outline__leading"></div>
-                <div className="mdc-notched-outline__notch">
-                    <label className="mdc-floating-label">{label}</label>
-                </div>
-                <div className="mdc-notched-outline__trailing"></div>
             </div>
         </div>
     );

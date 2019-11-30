@@ -44,12 +44,13 @@ a:active {
     position: static;
 }
 
-.hello-world {
-    padding: 48px 24px;
+.mdc-top-app-bar a {
+    color: $mdc-theme-on-primary;
+    text-decoration: none;
 }
 
-.hello-world h1 {
-    text-align: center;
+.mdc-select {
+    height: $mdc-select-height;
 }
 
 footer {
