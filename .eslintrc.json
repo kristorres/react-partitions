@@ -11,6 +11,7 @@
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -45,6 +46,7 @@
         "no-array-constructor": "error",
         "no-case-declarations": "error",
         "no-console": ["error", { "allow": ["warn", "error"] }],
+        "no-constant-condition": ["error", { "checkLoops": false }],
         "no-duplicate-imports": "error",
         "no-eval": "error",
         "no-loop-func": "error",
@@ -58,12 +60,14 @@
         "no-nested-ternary": "error",
         "no-new-object": "error",
         "no-new-wrappers": "error",
-        "no-param-reassign": ["error", { "props": true }],
+        "no-param-reassign": ["error", { "props": false }],
         "no-plusplus": "error",
         "no-trailing-spaces": "error",
         "no-underscore-dangle": "error",
         "no-unneeded-ternary": "error",
-        "no-unused-vars": "error",
+        "no-unused-vars": ["error", {
+            "argsIgnorePattern": "^(n|part|weight)$"
+        }],
         "no-useless-escape": "error",
         "no-var": "error",
         "no-whitespace-before-property": "error",
