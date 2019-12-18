@@ -2,10 +2,10 @@ import path from "path";
 
 import alias from "@axel669/rollup-plugin-path-alias";
 import json from "@rollup/plugin-json";
+import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import babel from "rollup-plugin-babel";
 import commonJS from "rollup-plugin-commonjs";
-import resolve from "rollup-plugin-node-resolve";
 
 export default {
     input: "./src/main.js",
