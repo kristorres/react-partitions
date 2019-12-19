@@ -5,6 +5,8 @@ React Partitions
 
 [![React](https://img.shields.io/badge/React-16-blue.svg?style=flat&maxAge=2592000)](https://reactjs.org)
 
+![sylvester-glaisher](resources/sylvester-glaisher_bijection.gif)
+
 **React Partitions** is an upcoming interactive web app where users can animate
 bijections of integer partitions with Ferrers diagrams. The web app will be
 primarily aimed at applied mathematicians, especially professors and students in
