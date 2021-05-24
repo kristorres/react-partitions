@@ -20,6 +20,7 @@ export default {
     },
     plugins: [
         replace({
+            "preventAssignment": true,
             "process.env.BUILD": JSON.stringify("dev")
         }),
         alias({
@@ -28,6 +29,7 @@ export default {
         babel({
             include: "src/**/*.js",
             babelrc: false,
+            babelHelpers: "bundled",
             plugins: [
                 "@babel/plugin-transform-react-jsx",
                 "@babel/plugin-proposal-optional-chaining",
