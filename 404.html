@@ -1,59 +1,65 @@
----
-permalink: /404.html
----
-
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html>
     <head>
-
-        <!-- Required meta tags -->
-        <meta charset="UTF-8"/>
-        <meta name="viewport"
-              content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"/>
-
-        <!-- Web page title -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>404 Not Found</title>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet"
-              type="text/css"
-              href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-              crossorigin="anonymous"/>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:700|Oswald:700"
+        />
 
-        <!-- Source Sans Pro and Oswald fonts CSS -->
-        <link rel="stylesheet"
-              type="text/css"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Oswald:700"/>
-
-        <!-- Custom styles -->
         <style>
-            #content {
-                min-height: 100vh;
+            * {
+                box-sizing: border-box;
             }
-            #content #message h1 {
+            :root {
+                color-scheme: light dark;
+            }
+            body {
+                width: 100%;
+                height: 100vh;
+                padding: 0px;
+                margin: 0px;
+            }
+            h1 {
                 font: 150px Oswald, HelveticaNeue-CondensedBold, sans-serif;
                 font-weight: 700;
-                color: #ED1C27;
+                color: #f44336;
             }
-            #content #message h2 {
-                font: 50px "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+            h2 {
+                font: 50px "Source Sans Pro", system-ui, -apple-system, "Helvetica Neue", sans-serif;
                 font-weight: 700;
-                color: black;
+            }
+
+            .margin-vertical-0 {
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            #content {
+                display: flex;
+                flex-direction: column;
+                max-width: 1200px;
+                height: 100%;
+                padding: 0px 16px;
+                margin: 0px auto;
+            }
+            #message {
+                text-align: center;
+                margin: auto 0px;
             }
         </style>
-
     </head>
 
     <body>
-        <div id="content" class="d-flex flex-column container">
-            <main id="message" class="my-auto">
-                <h1 class="text-center my-0">404</h1>
-                <h2 class="text-center my-0">NOT FOUND</h2>
-            </main>
+        <div id="content">
+            <div id="message">
+                <h1 class="margin-vertical-0">404</h1>
+                <h2 class="margin-vertical-0">NOT FOUND</h2>
+            </div>
         </div>
     </body>
-
 </html>
